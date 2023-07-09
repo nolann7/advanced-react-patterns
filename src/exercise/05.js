@@ -9,7 +9,7 @@ const callAll =
   (...args) =>
     fns.forEach(fn => fn?.(...args))
 
-function toggleReducer(state, {type, initialState}) {
+export function toggleReducer(state, {type, initialState}) {
   switch (type) {
     case 'toggle': {
       return {on: !state.on}
@@ -63,7 +63,7 @@ function App() {
   const [timesClicked, setTimesClicked] = React.useState(0)
   const clickedTooMuch = timesClicked >= 4
 
-  function toggleStateReducer(state, action) {
+  /*   function toggleStateReducer(state, action) {
     switch (action.type) {
       case 'toggle': {
         if (clickedTooMuch) {
@@ -78,8 +78,13 @@ function App() {
         throw new Error(`Unsupported type: ${action.type}`)
       }
     }
+  } */
+  function toggleStateReducer(state, action) {
+    if (action.type === 'toggle' && timesClicked >= 4) {
+      return {on: state.on}
+    }
+    return toggleReducer(state, action)
   }
-
   const {on, getTogglerProps, getResetterProps} = useToggle({
     reducer: toggleStateReducer,
   })
