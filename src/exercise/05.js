@@ -9,6 +9,10 @@ const callAll =
   (...args) =>
     fns.forEach(fn => fn?.(...args))
 
+export const reducerActionTypes = {
+  toggle: 'toggle',
+  reset: 'reset',
+}
 export function toggleReducer(state, {type, initialState}) {
   switch (type) {
     case 'toggle': {
@@ -80,7 +84,7 @@ function App() {
     }
   } */
   function toggleStateReducer(state, action) {
-    if (action.type === 'toggle' && timesClicked >= 4) {
+    if (action.type === reducerActionTypes.toggle && timesClicked >= 4) {
       return {on: state.on}
     }
     return toggleReducer(state, action)
